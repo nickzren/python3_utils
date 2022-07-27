@@ -14,7 +14,6 @@ def summarize_fastqs(fh):
             print(f"Didn't find expected directory: {path}")
             continue
         for root, dirs, files in os.walk(path):
-            print(dirs)
             fastq_count_in_dir = 0
             md5_count_in_dir = 0
             for name in files:
