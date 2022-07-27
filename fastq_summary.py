@@ -15,15 +15,21 @@ def summarize_fastqs(fh):
             continue
         for root, dirs, files in os.walk(path):
             print(dirs)
+            fastq_count_in_dir = 0
+            md5_count_in_dir = 0
             for name in files:
                 if name.endswith(".fastq.gz"):
-                    print(name)
                     fastq_count += 1
+                    fastq_count_in_dir += 1
                     fastq_size += os.stat(os.path.join(root, name)).st_size
                 elif name.endswith(".fastq.gz.md5sum"):
-                    print(name)
                     md5_count += 1
                     md5_size += os.stat(os.path.join(root, name)).st_size
+                    md5_count_in_dir += 1
+            
+            # missing fastq or md5
+            if(fastq_count_in_dir != md5_count_in_dir):
+                print(root)
 
     print(f"total fastq file number: {fastq_count}")
     print(f"total fastq file size: {fastq_size}")
